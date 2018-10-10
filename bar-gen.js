@@ -21,7 +21,7 @@ var addSpacer = function() {
 
 // passed options object must include width, height, value, and fontColor
 var addBar = function(options) {
-  return "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + "\" class=\"bar-gen bar\">" + options.value + "</div>";
+  return "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + ";background-color:" + options.barColor + ";\" class=\"bar-gen bar\">" + options.value + "</div>";
 };
 
 var maxValue = function(data) {
@@ -43,7 +43,10 @@ var drawBarChart = function(data, options, element) {
   var numSpaces = data.length - 1;
   var outputString = "";
   var spacerWidth = 5;
-  var fontColor = options.color || "white";
+  var fontColor = options.fontColor || "white";
+  var barColors = options.barColors || [ "slateGrey" ];
+
+  console.log(barColors);
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
   if (element.length) {
@@ -83,7 +86,8 @@ var drawBarChart = function(data, options, element) {
         width: elemWidth,
         height: data[i] / maxDataValue * (stripSuffix(elemStyle.height, 2) - 5),
         value: data[i],
-        fontColor: fontColor
+        fontColor: fontColor,
+        barColor: barColors[i % barColors.length]
       };
       outputString += addBar(optionsObj);
     }

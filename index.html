@@ -32,7 +32,7 @@
       $(document).ready(function() {
         var chartOptions = {
           width: 400,
-          height: 250
+          height: 300
         };
         drawBarChart([6, 2, 5, 1, 3, 7, 2, 6, 3, 1, 5], chartOptions, document.getElementById("chart1"));
 
@@ -40,7 +40,9 @@
         chartOptions = {
           width: 620,
           height: 200,
-          valuePosition: "bottom"
+          valuePosition: "bottom",
+          fontColor: "yellow",
+          barColors: [ "brown", "chocolate", "crimson", "darkBlue" ]
         };
         drawBarChart([15, 6, 13, 11, 19, 8, 12, 11], chartOptions, $("#chart2"));
 
