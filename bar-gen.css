@@ -1,0 +1,20 @@
+/* classes */
+.chart-container {
+  font-size: 0;
+}
+
+.bar-gen {
+  display: inline-block;
+  font-size: 16px;
+  text-align: center;
+}
+
+.bar {
+  vertical-align: text-bottom;
+  padding-top: 5px;
+  background-color: #555;
+}
+
+.spacer {
+  width: 5px;
+}

@@ -11,10 +11,39 @@ var addSuffix = function(input, suffix) {
   return input + suffix;
 };
 
+var stripSuffix = function(input, suffixLength) {
+  return input.slice(0, input.length - suffixLength);
+};
+
+var addSpacer = function() {
+  return "<div class=\"bar-gen spacer\"></div>";
+};
+
+// passed options object must include width, height, value, and fontColor
+var addBar = function(options) {
+  return "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + "\" class=\"bar-gen bar\">" + options.value + "</div>";
+};
+
+var maxValue = function(data) {
+  var returnNum = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i] > returnNum) {
+      returnNum = data[i];
+    }
+  }
+  return returnNum;
+};
+
 // main function
 var drawBarChart = function(data, options, element) {
   // variable declaration
   var elem;
+  var defaultWidth = "100%";
+  var defaultHeight = "100%";
+  var numSpaces = data.length - 1;
+  var outputString = "";
+  var spacerWidth = 5;
+  var fontColor = options.color || "white";
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
   if (element.length) {
@@ -27,9 +56,41 @@ var drawBarChart = function(data, options, element) {
 
   // define element styling
   var elemStyle = elem.style;
-  elemStyle.width = addSuffix(options.width, "px");
-  elemStyle.height = addSuffix(options.height, "px");
+  elemStyle.width = options.width ? addSuffix(options.width, "px") : defaultWidth;
+  elemStyle.height = options.height ? addSuffix(options.height, "px") : defaultHeight;
 
+  // add chart-container class to element
+  elem.classList.add("chart-container");
+
+  // determine element width
+  var elemWidth = (stripSuffix(elemStyle.width, 2) - (numSpaces * spacerWidth)) / data.length;
+
+  var maxDataValue = 0;
+
+  // check what type of data has been passed in (plain array or nested array)
+  if (data[0].length) {
+    // generate html to draw barchart with labels
+
+  } else {
+    // generate html to draw barchart
+    maxDataValue = maxValue(data);
+    for (var i = 0; i < data.length; i++) {
+      if (i > 0) {
+        // add spacer between elements
+        outputString += addSpacer();
+      }
+      var optionsObj = {
+        width: elemWidth,
+        height: data[i] / maxDataValue * (stripSuffix(elemStyle.height, 2) - 5),
+        value: data[i],
+        fontColor: fontColor
+      };
+      outputString += addBar(optionsObj);
+    }
+  }
+
+  // draw barchart
+  elem.innerHTML = outputString;
 };
 
 /*
