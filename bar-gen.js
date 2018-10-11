@@ -19,9 +19,11 @@ var addSpacer = function(width) {
   return "<div style=\"width:" + addSuffix(width, "px") + ";\" class=\"bar-gen spacer\"></div>";
 };
 
-// passed options object must include width, height, value, valuePosition, and fontColor
+// passed options object must include width, height, value, valuePosition, label, and fontColor
 var addBar = function(options) {
-  return "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + ";background-color:" + options.barColor + ";\" class=\"bar-gen bar\"><span class=\"bar-value " + options.valuePosition + "\">" + options.value + "</span></div>";
+  var returnString = "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + ";background-color:" + options.barColor + ";\" class=\"bar-gen bar\"><span class=\"bar-value " + options.valuePosition + "\">" + options.value + "</span>";
+  returnString += options.showTooltips ? "<span class=\"tooltiptext\">" + options.label + " - " + options.value + "</span>" : "";
+  return returnString + "</div>";
 };
 
 var addLabel = function(label, width, labelColor) {
@@ -48,7 +50,7 @@ var addHorizontal = function(width, axisColor, showYAxis) {
 
 var addTick = function(tickValue, maxDataValue, colors) {
   // colors = [ axisColor, labelColor ]
-  var top = Math.round(97 - ((tickValue / maxDataValue) * 100)) + "%";
+  var top = Math.round(96 - ((tickValue / maxDataValue) * 100)) + "%";
   return "<span class=\"tick\" style=\"color:" + colors[1] + ";top:" + top + ";\">" + tickValue + " <span style=\"color:" + colors[0] + ";\">-</span></span>";
 };
 
@@ -80,6 +82,7 @@ var drawBarChart = function(data, options, element) {
   var titleFontColor = options.titleFontColor || "black";
   var xAxisHeight = 20;
   var titleAreaHeight = titleFontSize + 10;
+  var showTooltips = options.showTooltips || false;
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
   elem = element.length ? element[0] : element;
@@ -143,7 +146,9 @@ var drawBarChart = function(data, options, element) {
         value: data[i][0],
         fontColor: fontColor,
         barColor: barColors[i % barColors.length],
-        valuePosition: valuePosition
+        valuePosition: valuePosition,
+        label: data[i][1],
+        showTooltips: showTooltips
       };
       outputString += addBar(optionsObj);
     }
