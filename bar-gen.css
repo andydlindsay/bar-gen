@@ -17,3 +17,8 @@
 .spacer {
   width: 5px;
 }
+
+.horizontal {
+  border: none;
+  height: 1px;
+}
