@@ -7,11 +7,11 @@
   display: inline-block;
   font-size: 16px;
   text-align: center;
+  position: relative;
 }
 
 .bar {
   vertical-align: text-bottom;
-  padding-top: 5px;
 }
 
 .spacer {
@@ -21,4 +21,27 @@
 .horizontal {
   border: none;
   height: 1px;
+}
+
+.bar-value {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.center {
+  top: 40%;
+}
+
+.bottom {
+  bottom: 5px;
+}
+
+.top {
+  top: 5px;
+}
+
+.label {
+  font-size: 14px;
 }

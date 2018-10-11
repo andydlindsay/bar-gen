@@ -19,9 +19,9 @@ var addSpacer = function() {
   return "<div class=\"bar-gen spacer\"></div>";
 };
 
-// passed options object must include width, height, value, and fontColor
+// passed options object must include width, height, value, valuePosition, and fontColor
 var addBar = function(options) {
-  return "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + ";background-color:" + options.barColor + ";\" class=\"bar-gen bar\">" + options.value + "</div>";
+  return "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + ";background-color:" + options.barColor + ";\" class=\"bar-gen bar\"><span class=\"bar-value " + options.valuePosition + "\">" + options.value + "</span></div>";
 };
 
 var addLabel = function(label, width, labelColor) {
@@ -57,6 +57,7 @@ var drawBarChart = function(data, options, element) {
   var barColors = options.barColors || [ "slateGrey" ];
   var axisColor = options.axisColor || "black";
   var labelColor = options.labelColor || "black";
+  var valuePosition = options.valuePosition || "top";
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
   if (element.length) {
@@ -95,10 +96,11 @@ var drawBarChart = function(data, options, element) {
       }
       optionsObj = {
         width: elemWidth,
-        height: data[i][0] / maxDataValue * (stripSuffix(elemStyle.height, 2) - 25),
+        height: data[i][0] / maxDataValue * (stripSuffix(elemStyle.height, 2) - 20),
         value: data[i][0],
         fontColor: fontColor,
-        barColor: barColors[i % barColors.length]
+        barColor: barColors[i % barColors.length],
+        valuePosition: valuePosition
       };
       outputString += addBar(optionsObj);
     }
@@ -124,10 +126,11 @@ var drawBarChart = function(data, options, element) {
       }
       optionsObj = {
         width: elemWidth,
-        height: data[i] / maxDataValue * (stripSuffix(elemStyle.height, 2) - 5),
+        height: data[i] / maxDataValue * stripSuffix(elemStyle.height, 2),
         value: data[i],
         fontColor: fontColor,
-        barColor: barColors[i % barColors.length]
+        barColor: barColors[i % barColors.length],
+        valuePosition: valuePosition
       };
       outputString += addBar(optionsObj);
     }
@@ -149,7 +152,8 @@ var drawBarChart = function(data, options, element) {
     xAxisTitle - title to be displayed on x axis
     yAxisTitle - title to be displayed on y axis
 
-    yAxisTicks - how are we implementing this?
+    showYAxis - boolean, render y axis
+    yAxisTicks - array of values for ticks to be placed at
 
     chartTitle - the title for the barchart
     titleFontSize - the font size of the title
