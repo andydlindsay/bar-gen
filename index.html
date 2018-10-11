@@ -6,7 +6,7 @@
     <title>Bar-Gen Demo</title>
 
     <!-- CSS Reset -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css"> -->
 
     <!-- Load bar-gen CSS -->
     <link rel="stylesheet" href="bar-gen.css">
@@ -20,6 +20,7 @@
     <div id="chart1"></div>
     <div id="chart2"></div>
     <div id="chart3"></div>
+    <div id="chart4"></div>
 
     <!-- Load jQuery -->
     <script   src="https://code.jquery.com/jquery-3.3.1.js"   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="   crossorigin="anonymous"></script>
@@ -62,6 +63,33 @@
           [ 13, "Friday"]
         ];
         drawBarChart(dataArray, chartOptions, $("#chart3"));
+
+        chartOptions = {
+          width: 500,
+          height: 300,
+          labelColor: "indigo",
+          barColors: [ "darkMagenta", "darkRed", "darkViolet" ],
+          axisColor: "indigo",
+          valuePosition: "top",
+          showYAxis: true,
+          yAxisTicks: [ 0, 25, 50, 75, 100, 125 ],
+          spacerWidth: 3
+        };
+        dataArray = [
+          [ 137, "JAN" ],
+          [ 106, "FEB" ],
+          [ 124, "MAR" ],
+          [ 130, "APR" ],
+          [ 98, "MAY" ],
+          [ 110, "JUN" ],
+          [ 104, "JUL" ],
+          [ 127, "AUG" ],
+          [ 140, "SEP" ],
+          [ 110, "OCT" ],
+          [ 120, "NOV" ],
+          [ 145, "DEC" ]
+        ];
+        drawBarChart(dataArray, chartOptions, $("#chart4"));
       });
     </script>
   </body>

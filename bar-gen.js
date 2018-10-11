@@ -15,8 +15,8 @@ var stripSuffix = function(input, suffixLength) {
   return input.slice(0, input.length - suffixLength);
 };
 
-var addSpacer = function() {
-  return "<div class=\"bar-gen spacer\"></div>";
+var addSpacer = function(width) {
+  return "<div style=\"width:" + addSuffix(width, "px") + ";\" class=\"bar-gen spacer\"></div>";
 };
 
 // passed options object must include width, height, value, valuePosition, and fontColor
@@ -38,8 +38,19 @@ var maxValue = function(data) {
   return returnNum;
 };
 
-var addHorizontal = function(width, axisColor) {
-  return "<hr align=\"left\" style=\"width:" + addSuffix(width, "px") + ";color:" + axisColor + ";background-color:" + axisColor + "\" class=\"horizontal\">";
+var addHorizontal = function(width, axisColor, showYAxis) {
+  if (showYAxis) {
+    return "<div class=\"y-axis-spacer\"></div><hr align=\"left\" style=\"width:" + addSuffix(width - 50, "px") + ";color:" + axisColor + ";background-color:" + axisColor + "\" class=\"horizontal inline-block\">";
+  } else {
+    return "<hr align=\"left\" style=\"width:" + addSuffix(width, "px") + ";color:" + axisColor + ";background-color:" + axisColor + "\" class=\"horizontal\">";
+  }
+};
+
+var addTick = function(tickValue, maxDataValue, colors) {
+  // colors = [ axisColor, labelColor ]
+  var top = Math.round(97 - ((tickValue / maxDataValue) * 100)) + "%";
+  console.log(top);
+  return "<span class=\"tick\" style=\"color:" + colors[1] + ";top:" + top + ";\">" + tickValue + " <span style=\"color:" + colors[0] + ";\">-</span></span>";
 };
 
 // main function
@@ -48,25 +59,22 @@ var drawBarChart = function(data, options, element) {
   var elem;
   var defaultWidth = "100%";
   var defaultHeight = "100%";
-  var numSpaces = data.length - 1;
+  var numSpaces = options.showYAxis ? data.length : data.length - 1;
   var outputString = "";
   var i;
   var optionsObj = {};
-  var spacerWidth = 5;
+  var elemWidth = 0;
+  var spacerWidth = options.spacerWidth || 5;
   var fontColor = options.fontColor || "white";
   var barColors = options.barColors || [ "slateGrey" ];
   var axisColor = options.axisColor || "black";
   var labelColor = options.labelColor || "black";
   var valuePosition = options.valuePosition || "top";
+  var showYAxis = options.showYAxis || false;
+  var yAxisTicks = options.yAxisTicks || [];
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
-  if (element.length) {
-    // a jQuery element was passed in
-    elem = element[0];
-  } else {
-    // a DOM element was passed in
-    elem = element;
-  }
+  elem = element.length ? element[0] : element;
 
   // define element styling
   var elemStyle = elem.style;
@@ -77,7 +85,11 @@ var drawBarChart = function(data, options, element) {
   elem.classList.add("chart-container");
 
   // determine element width
-  var elemWidth = (stripSuffix(elemStyle.width, 2) - (numSpaces * spacerWidth)) / data.length;
+  if (showYAxis) {
+    elemWidth = (stripSuffix(elemStyle.width, 2) - (numSpaces * spacerWidth) - 52) / data.length;
+  } else {
+    elemWidth = (stripSuffix(elemStyle.width, 2) - (numSpaces * spacerWidth)) / data.length;
+  }
 
   var maxDataValue = 0;
 
@@ -89,10 +101,30 @@ var drawBarChart = function(data, options, element) {
       dataArray.push(data[i][0]);
     }
     maxDataValue = maxValue(dataArray);
+    if (showYAxis) {
+      outputString += "<div style=\"height:" + addSuffix((stripSuffix(elemStyle.height, 2) - 20), "px") + ";border-color:" + axisColor + ";\" id=\"yaxis\">";
+
+      // check if tick locations have been specified
+      if (yAxisTicks.length === 0) {
+        // no tick locations have been specified
+        yAxisTicks = [
+          Math.round(0.25 * maxDataValue),
+          Math.round(0.5 * maxDataValue),
+          Math.round(0.75 * maxDataValue)
+        ];
+      }
+
+      // add ticks to y axis
+      for (i = 0; i < yAxisTicks.length; i++) {
+        outputString += addTick(yAxisTicks[i], maxDataValue, [ axisColor, labelColor ]);
+      }
+
+      outputString += "</div>";
+    }
     for (i = 0; i < data.length; i++) {
-      if (i > 0) {
+      if (i > 0 || showYAxis) {
         // add spacer between elements
-        outputString += addSpacer();
+        outputString += addSpacer(spacerWidth);
       }
       optionsObj = {
         width: elemWidth,
@@ -105,13 +137,16 @@ var drawBarChart = function(data, options, element) {
       outputString += addBar(optionsObj);
     }
     // add horizontal line
-    outputString += addHorizontal(options.width, axisColor);
+    outputString += addHorizontal(options.width, axisColor, showYAxis);
 
     // add labels
+    if (showYAxis) {
+      outputString += "<div style=\"width:52px;\" class=\"y-axis-spacer\"></div>";
+    }
     for (i = 0; i < data.length; i++) {
-      if (i > 0) {
+      if (i > 0 || showYAxis) {
         // add spacer between elements
-        outputString += addSpacer();
+        outputString += addSpacer(spacerWidth);
       }
       outputString += addLabel(data[i][1], elemWidth, labelColor);
     }
@@ -122,7 +157,7 @@ var drawBarChart = function(data, options, element) {
     for (i = 0; i < data.length; i++) {
       if (i > 0) {
         // add spacer between elements
-        outputString += addSpacer();
+        outputString += addSpacer(spacerWidth);
       }
       optionsObj = {
         width: elemWidth,
@@ -141,22 +176,7 @@ var drawBarChart = function(data, options, element) {
 };
 
 /*
-  options {
-    width - the width of the barchart
-    height - the height of the barchart
-
-    valuePosition - where the value should be displayed in the bar (top, centre, or bottom)
-    barColor - the colour of the bars
-    labelColor - the colour of the labels
-    barSpacing - the space between bars
-    xAxisTitle - title to be displayed on x axis
-    yAxisTitle - title to be displayed on y axis
-
-    showYAxis - boolean, render y axis
-    yAxisTicks - array of values for ticks to be placed at
-
-    chartTitle - the title for the barchart
-    titleFontSize - the font size of the title
-    titleFontColor - the font color of the title
-  }
+  chartTitle - the title for the barchart
+  titleFontSize - the font size of the title
+  titleFontColor - the font color of the title
 */
