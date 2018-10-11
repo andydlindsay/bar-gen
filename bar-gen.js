@@ -49,8 +49,11 @@ var addHorizontal = function(width, axisColor, showYAxis) {
 var addTick = function(tickValue, maxDataValue, colors) {
   // colors = [ axisColor, labelColor ]
   var top = Math.round(97 - ((tickValue / maxDataValue) * 100)) + "%";
-  console.log(top);
   return "<span class=\"tick\" style=\"color:" + colors[1] + ";top:" + top + ";\">" + tickValue + " <span style=\"color:" + colors[0] + ";\">-</span></span>";
+};
+
+var addTitle = function(chartTitle, titleFontSize, titleFontColor) {
+  return "<div class=\"title\" style=\"font-size:" + addSuffix(titleFontSize, "px") + ";color:" + titleFontColor + ";height:" + addSuffix((titleFontSize + 10), "px") + ";\">" + chartTitle + "</div>";
 };
 
 // main function
@@ -72,6 +75,11 @@ var drawBarChart = function(data, options, element) {
   var valuePosition = options.valuePosition || "top";
   var showYAxis = options.showYAxis || false;
   var yAxisTicks = options.yAxisTicks || [];
+  var chartTitle = options.chartTitle || "Barchart Title";
+  var titleFontSize = options.titleFontSize || 18;
+  var titleFontColor = options.titleFontColor || "black";
+  var xAxisHeight = 20;
+  var titleAreaHeight = titleFontSize + 10;
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
   elem = element.length ? element[0] : element;
@@ -95,6 +103,9 @@ var drawBarChart = function(data, options, element) {
 
   // check what type of data has been passed in (plain array or nested array)
   if (data[0].length) {
+    // add title
+    outputString += addTitle(chartTitle, titleFontSize, titleFontColor);
+
     // generate html to draw barchart with labels
     var dataArray = [];
     for (i = 0; i < data.length; i++) {
@@ -102,7 +113,7 @@ var drawBarChart = function(data, options, element) {
     }
     maxDataValue = maxValue(dataArray);
     if (showYAxis) {
-      outputString += "<div style=\"height:" + addSuffix((stripSuffix(elemStyle.height, 2) - 20), "px") + ";border-color:" + axisColor + ";\" id=\"yaxis\">";
+      outputString += "<div style=\"height:" + addSuffix((stripSuffix(elemStyle.height, 2) - xAxisHeight - titleAreaHeight), "px") + ";border-color:" + axisColor + ";\" class=\"yaxis\">";
 
       // check if tick locations have been specified
       if (yAxisTicks.length === 0) {
@@ -128,7 +139,7 @@ var drawBarChart = function(data, options, element) {
       }
       optionsObj = {
         width: elemWidth,
-        height: data[i][0] / maxDataValue * (stripSuffix(elemStyle.height, 2) - 20),
+        height: data[i][0] / maxDataValue * (stripSuffix(elemStyle.height, 2) - xAxisHeight - titleAreaHeight),
         value: data[i][0],
         fontColor: fontColor,
         barColor: barColors[i % barColors.length],
@@ -174,9 +185,3 @@ var drawBarChart = function(data, options, element) {
   // draw barchart
   elem.innerHTML = outputString;
 };
-
-/*
-  chartTitle - the title for the barchart
-  titleFontSize - the font size of the title
-  titleFontColor - the font color of the title
-*/

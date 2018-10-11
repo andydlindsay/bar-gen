@@ -18,9 +18,6 @@
   <body>
     <h1>Bar-Gen Demo</h1>
     <div id="chart1"></div>
-    <div id="chart2"></div>
-    <div id="chart3"></div>
-    <div id="chart4"></div>
 
     <!-- Load jQuery -->
     <script   src="https://code.jquery.com/jquery-3.3.1.js"   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="   crossorigin="anonymous"></script>
@@ -32,39 +29,6 @@
     <script>
       $(document).ready(function() {
         var chartOptions = {
-          width: 400,
-          height: 300
-        };
-        drawBarChart([6, 2, 5, 1, 3, 7, 2, 6, 3, 1, 5], chartOptions, document.getElementById("chart1"));
-
-        chartOptions = {
-          width: 620,
-          height: 200,
-          valuePosition: "bottom",
-          fontColor: "yellow",
-          barColors: [ "brown", "chocolate", "crimson", "darkBlue" ],
-          valuePosition: "center"
-        };
-        drawBarChart([15, 6, 13, 11, 19, 8, 12, 11], chartOptions, $("#chart2"));
-
-        chartOptions = {
-          width: 400,
-          height: 200,
-          labelColor: "green",
-          barColors: [ "slateBlue", "violet" ],
-          axisColor: "salmon",
-          valuePosition: "bottom"
-        };
-        var dataArray = [
-          [ 11, "Monday"],
-          [ 12, "Tuesday"],
-          [ 14, "Wednesday"],
-          [ 11, "Thursday"],
-          [ 13, "Friday"]
-        ];
-        drawBarChart(dataArray, chartOptions, $("#chart3"));
-
-        chartOptions = {
           width: 500,
           height: 300,
           labelColor: "indigo",
@@ -73,9 +37,12 @@
           valuePosition: "top",
           showYAxis: true,
           yAxisTicks: [ 0, 25, 50, 75, 100, 125 ],
-          spacerWidth: 3
+          spacerWidth: 3,
+          chartTitle: "Sales for 2018 (in billions)",
+          titleFontSize: 24,
+          titleFontColor: "indigo"
         };
-        dataArray = [
+        var dataArray = [
           [ 137, "JAN" ],
           [ 106, "FEB" ],
           [ 124, "MAR" ],
@@ -89,7 +56,7 @@
           [ 120, "NOV" ],
           [ 145, "DEC" ]
         ];
-        drawBarChart(dataArray, chartOptions, $("#chart4"));
+        drawBarChart(dataArray, chartOptions, $("#chart1"));
       });
     </script>
   </body>
