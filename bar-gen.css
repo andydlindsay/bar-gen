@@ -78,13 +78,11 @@
 }
 
 .y-axis-spacer {
-  width: 50px;
   display: inline-block;
   font-size: 14px;
 }
 
 .yaxis {
-  width: 50px;
   background-color: transparent;
   border-right: 2px solid;
   display: inline-block;
@@ -95,5 +93,4 @@
 
 .title {
   text-align: center;
-  margin-left: 52px;
 }
