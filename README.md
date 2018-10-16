@@ -1,13 +1,9 @@
 # Bar-Gen
-## The no-library barchart generator
-
-***
+#### The no-library barchart generator
 
 ## About
 
 Bar-Gen is a bar chart creation program that converts your data into attractive charts. Simple to use with many customizable features.
-
-***
 
 ## Usage
 
@@ -37,8 +33,6 @@ drawBarChart(dataArray, chartOptions, selectedElement);
 * ```selectedElement```
   * A DOM or jQuery element that the chart will be rendered into.
 
-***
-
 ## Example usage
 
 #### Javascript
@@ -66,8 +60,6 @@ drawBarChart(dataArray, chartOptions, document.getElementById("barchart"));
 
 ![generated barchart](https://s3-us-west-2.amazonaws.com/andydlindsay-bar-gen/Screen+Shot+2018-10-15+at+9.52.45+PM.png)
 
-***
-
 ## The *dataArray* parameter
 
 The ```dataArray``` parameter must be a **nested** array containing the data for the chart as well as the labels for the x-axis. For example:
@@ -81,8 +73,6 @@ var dataArray = [
 ];
 ```
 Ensure that the first element in the nested array is the data value and the second is the x-axis label.
-
-***
 
 ## The *chartOptions* object
 
@@ -100,28 +90,22 @@ Parameter | Optional | Summary | Default
 ```valuePosition``` | Yes | The position within the bar element where the value will be displayed. Choices are ```top```, ```middle```, or ```bottom```. | ```"top"```
 ```yAxisTicks``` | Yes | An array showing where the ticks on the y-axis should be located. The y-axis will render to the larger of either the largest value in the ```yAxisTicks``` array or the largest value in the ```dataArray``` array. | *Generated based on 0, 20, 40, 60, 80, and 100% of the provided data*
 ```chartTitle``` | Yes | The title that appears above the rendered chart. | ```"Barchart Title"```
-```titleFontSize``` | Yes | The font size of the title (in pixels). | ```18```
+```titleFontSize``` | Yes | The font size (in pixels) of the title. | ```18```
 ```titleFontColor``` | Yes | The color of the title text. | ```"black"```
-```xAxisHeight``` | Yes | The height of the x-axis (in pixels). | ```20```
+```xAxisHeight``` | Yes | The height (in pixels) of the x-axis. | ```20```
 ```showTooltips``` | Yes | A boolean value to display or hide tooltips for the chart. | ```false```
 ```yAxisWidth``` | Yes | The width (in pixels) of the y-axis. | ```40```
 ```axisBorderWidth``` | Yes | The width or thickness (in pixels) of the axes. | ```2```
 
-***
-
 ## Known issues/bugs
 
-*None*
-
-***
+* Does not show negative values
 
 ## Roadmap/upcoming features
 
 * Generate multiple value (stacked) bar charts
 * Handle negative values
 * Specify non-zero starting point for y-axis
-
-***
 
 ## External resources used
 
