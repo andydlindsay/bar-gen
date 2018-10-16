@@ -40,7 +40,6 @@
 
 .horizontal {
   border: none;
-  height: 2px;
 }
 
 .bar-value {
@@ -48,18 +47,6 @@
   left: 0;
   width: 100%;
   text-align: center;
-}
-
-.center {
-  top: 40%;
-}
-
-.bottom {
-  bottom: 5px;
-}
-
-.top {
-  top: 5px;
 }
 
 .label {
@@ -84,7 +71,7 @@
 
 .yaxis {
   background-color: transparent;
-  border-right: 2px solid;
+  border-right-style: solid;
   display: inline-block;
   font-size: 14px;
   vertical-align: text-bottom;
