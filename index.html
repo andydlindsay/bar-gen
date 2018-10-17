@@ -5,9 +5,6 @@
     <meta charset="utf-8">
     <title>Bar-Gen Demo</title>
 
-    <!-- CSS Reset -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css"> -->
-
     <!-- Load bar-gen CSS -->
     <link rel="stylesheet" href="bar-gen.css">
 
@@ -19,9 +16,10 @@
     <h1>Bar-Gen Demo</h1>
     <div id="chart1"></div>
     <div id="chart2"></div>
+    <div id="chart3"></div>
 
     <!-- Load jQuery -->
-    <script   src="https://code.jquery.com/jquery-3.3.1.js"   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="   crossorigin="anonymous"></script>
+    <script   src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
     <!-- Load bar-gen script -->
     <script src="bar-gen.js"></script>
@@ -31,7 +29,7 @@
       $(document).ready(function() {
         var chartOptions = {
           width: 500,
-          height: 200,
+          height: 275,
           labelColor: "indigo",
           barColors: [ "darkMagenta", "darkRed", "darkViolet" ],
           axisColor: "indigo",
@@ -61,7 +59,7 @@
 
         chartOptions = {
           width: 500,
-          height: 300,
+          height: 325,
           labelColor: "darkMagenta",
           yAxisTicks: [ 0, 5, 10, 15, 20 ],
           chartTitle: "Employees Who Showed Up For Work",
@@ -77,6 +75,22 @@
         ];
         drawBarChart(dataArray, chartOptions, $("#chart2"));
 
+        chartOptions = {
+          width: 400,
+          height: 175,
+          chartTitle: "Favourite Foods",
+          titleFontColor: "crimson",
+          yAxisTicks: [ 0, 25, 50 ],
+          spacerWidth: 4,
+          valuePosition: "bottom"
+        };
+        dataArray = [
+          [ "47", "Pizza" ],
+          [ "23", "Salad" ],
+          [ "34", "Quinoa" ],
+          [ "39", "Raisin Bran" ]
+        ];
+        drawBarChart(dataArray, chartOptions, $("#chart3"));
       });
     </script>
   </body>

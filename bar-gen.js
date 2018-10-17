@@ -46,10 +46,15 @@ var addHorizontal = function(width, styleObj) {
   return "<div style=\"width:" + addSuffix(styleObj.yAxisWidth, "px") + "\" class=\"y-axis-spacer\"></div><hr align=\"left\" style=\"height:" + addSuffix(styleObj.axisBorderWidth, "px") + ";width:" + addSuffix(width - styleObj.yAxisWidth, "px") + ";color:" + styleObj.axisColor + ";background-color:" + styleObj.axisColor + "\" class=\"horizontal inline-block\">";
 };
 
-var addTick = function(tickValue, maxDataValue, colors) {
-  var top = addSuffix(Math.ceil(96 - ((tickValue / maxDataValue) * 100)), "%");
-  var bottom = addSuffix(Math.round((tickValue / maxDataValue) * 100) - 3, "%");
-  return "<span class=\"tick\" style=\"color:" + colors[1] + ";bottom:" + bottom + ";\">" + tickValue + " <span style=\"color:" + colors[0] + ";\">-</span></span>";
+var addTick = function(tickValue, maxDataValue, styleObj) {
+  // calculate adjustment needed to make ticks line up
+  // adjustment calculation derived using https://mycurvefit.com/
+  var a = 52.91662;
+  var b = 1.59075;
+  var c = 49.33542;
+  var adjustment = a/(1 + Math.pow(styleObj.totalHeight/c, b));
+  var bottom = addSuffix(Math.round((tickValue / maxDataValue) * 100) - adjustment, "%");
+  return "<span class=\"tick\" style=\"color:" + styleObj.labelColor + ";bottom:" + bottom + ";\">" + tickValue + " <span style=\"color:" + styleObj.axisColor + ";\">-</span></span>";
 };
 
 var addTitle = function(chartTitle, styleObj) {
@@ -95,7 +100,7 @@ var addYAxis = function(yAxisTicks, maxDataValue, styleObj) {
 
   // add ticks to y axis
   for (i = 0; i < yAxisTicks.length; i++) {
-    returnString += addTick(yAxisTicks[i], maxDataValue, [ styleObj.axisColor, styleObj.labelColor ]);
+    returnString += addTick(yAxisTicks[i], maxDataValue, { axisColor: styleObj.axisColor, labelColor: styleObj.labelColor, totalHeight: styleObj.height });
   }
 
   // close y axis div and return

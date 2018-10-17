@@ -81,7 +81,7 @@ Bar-gen has quite a few customizable options. Use the ```chartOptions``` object 
 Parameter | Optional | Summary | Default
 --- | --- | --- | ---
 ```width``` | No | The total width (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall width and the width of the individual bar elements will be based on this value. | *None*
-```height``` | No | The total height (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall height. | *None*
+```height``` | No | The total height (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall height. The minimum height is 100. | *None*
 ```spacerWidth``` | Yes | The space (in pixels) between each bar element. | ```5```
 ```fontColor``` | Yes | The font color for the values that are displayed on the bar elements. | ```"white"```
 ```barColors``` | Yes | An array containing colors for the bar elements. If the number of colors in ```barColors``` is less than the total number of data points passed in, then the colors will repeat in the order they are stated. | ```[ "slateGrey" ]```
