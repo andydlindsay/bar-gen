@@ -103,10 +103,23 @@ Parameter | Optional | Summary | Default
 
 ## Roadmap/upcoming features
 
-* Generate multiple value (stacked) bar charts
+* Generate stacked bar charts
 * Handle negative values
 * Specify non-zero starting point for y-axis
+* Generate horizontal bar charts
+* Generate grouped bar charts
+* Generate horizontal stacked bar charts
 
 ## External resources used
 
-* resources list
+* Adapted HTML5 blank template with jQuery from [this gist](https://gist.github.com/iwek/4570659)
+* Discovered alternative to 'with' statement (assign object 'path' to a temporary variable) on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with)
+* Experimented with creating rectangles using [W3 Schools'](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_shapes_rectangle) try it feature
+* Experimented turning rectangles into bar charts using [jsfiddle](https://jsfiddle.net/andydlindsay/zh2e5uwd/15/)
+* Learned about inline-block elements and whitespace in this answer on [stack overflow](https://stackoverflow.com/questions/19038799/why-is-there-an-unexplainable-gap-between-these-inline-block-div-elements)
+* Found HTML5 color names on [c-sharpcorner.com](https://www.c-sharpcorner.com/UploadFile/da6585/color-name-in-html5/)
+* Practiced relative and absolute positioning to display values at specific places within bar at [W3 Schools](https://www.w3schools.com/css/tryit.asp?filename=trycss_image_text_bottom_left)
+* Experimented with tooltips at [W3 Schools](https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_bottom)
+* Practiced using markdown to create README file using [Dillinger markdown previewer](https://dillinger.io/)
+* Calculated y-axis tick vertical adjustment amount by plotting points on a graph at [mycurvefit.com](https://mycurvefit.com/)
+* Used code from [this stack overflow answer](https://stackoverflow.com/questions/34790054/css-disable-bootstrap-box-sizing) to override default bootstrap box-sizing

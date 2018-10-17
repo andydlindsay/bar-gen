@@ -54,7 +54,7 @@ var addTick = function(tickValue, maxDataValue, styleObj) {
   var c = 8.679851;
   var d = 0.2150284;
   var adjustment = (a - d)/(1 + Math.pow(styleObj.barAreaHeight/c, b));
-  var bottom = addSuffix(Math.round((tickValue / maxDataValue) * 100) - adjustment, "%");
+  var bottom = addSuffix((tickValue / maxDataValue) * 100 - adjustment, "%");
   return "<span class=\"tick\" style=\"color:" + styleObj.labelColor + ";bottom:" + bottom + ";\">" + tickValue + " <span style=\"color:" + styleObj.axisColor + ";\">-</span></span>";
 };
 

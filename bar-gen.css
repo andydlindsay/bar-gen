@@ -1,3 +1,22 @@
+/* override bootstrap box-sizing */
+/* code from stack overflow answer https://stackoverflow.com/questions/34790054/css-disable-bootstrap-box-sizing */
+* {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
+/* override bootstrap line-height */
+* {
+  line-height: 1.25;
+}
+
 /* classes */
 .chart-container {
   font-size: 0;
