@@ -1,5 +1,15 @@
 # Bar-Gen
-#### The no-library barchart generator
+#### The no-library bar chart generator
+
+## Table of contents
+  * [About](#about)
+  * [Usage](#usage)
+  * [Example](#example)
+  * [The dataArray parameter](#the-dataarray-parameter)
+  * [The chartOptions object](#the-chartoptions-object)
+  * [Known issues or bugs](#known-issues-or-bugs)
+  * [Roadmap and upcoming features](#roadmap-and-upcoming-features)
+  * [External resources used](#external-resources-used)
 
 ## About
 
@@ -33,7 +43,7 @@ drawBarChart(dataArray, chartOptions, selectedElement);
 * ```selectedElement```
   * A DOM or jQuery element that the chart will be rendered into.
 
-## Example usage
+## Example
 
 #### Javascript
 ```
@@ -97,11 +107,11 @@ Parameter | Optional | Summary | Default
 ```yAxisWidth``` | Yes | The width (in pixels) of the y-axis. | ```40```
 ```axisBorderWidth``` | Yes | The width or thickness (in pixels) of the axes. | ```2```
 
-## Known issues/bugs
+## Known issues or bugs
 
 * Does not show negative values
 
-## Roadmap/upcoming features
+## Roadmap and upcoming features
 
 * Generate stacked bar charts
 * Handle negative values
@@ -116,7 +126,7 @@ Parameter | Optional | Summary | Default
 * Discovered alternative to 'with' statement (assign object 'path' to a temporary variable) on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with)
 * Experimented with creating rectangles using [W3 Schools'](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_shapes_rectangle) try it feature
 * Experimented turning rectangles into bar charts using [jsfiddle](https://jsfiddle.net/andydlindsay/zh2e5uwd/15/)
-* Learned about inline-block elements and whitespace in this answer on [stack overflow](https://stackoverflow.com/questions/19038799/why-is-there-an-unexplainable-gap-between-these-inline-block-div-elements)
+* Learned about inline-block elements and whitespace in [this answer on stack overflow](https://stackoverflow.com/questions/19038799/why-is-there-an-unexplainable-gap-between-these-inline-block-div-elements)
 * Found HTML5 color names on [c-sharpcorner.com](https://www.c-sharpcorner.com/UploadFile/da6585/color-name-in-html5/)
 * Practiced relative and absolute positioning to display values at specific places within bar at [W3 Schools](https://www.w3schools.com/css/tryit.asp?filename=trycss_image_text_bottom_left)
 * Experimented with tooltips at [W3 Schools](https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_bottom)

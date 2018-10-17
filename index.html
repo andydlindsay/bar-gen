@@ -10,16 +10,32 @@
 
     <!-- Load bar-gen CSS -->
     <link rel="stylesheet" href="bar-gen.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/stylesheets/main.css">
   </head>
 
   <body>
-    <h1>Bar-Gen Demo</h1>
-    <div id="chart1"></div>
-    <div id="chart2"></div>
-    <div id="chart3"></div>
+    <div class="container">
+
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+          <h1 class="display-4">Bar-Gen</h1>
+          <p class="lead">The no-library bar chart generator</p>
+        </div>
+      </div>
+
+      <div id="chart1"></div>
+      <div id="chart2"></div>
+      <div id="chart3"></div>
+
+      <footer class="page-footer font-small pt-4">
+        <div class="container-fluid text-center">
+          <h5>Check out the project on <a target="_blank" href="http://www.github.com/andydlindsay/bar-gen">Github</a></h5>
+        </div>
+        <div class="footer-copyright text-center py-3">
+          &copy; 2018 <a target="_blank" href="http://www.andydlindsay.com">Andy Lindsay</a>
+        </div>
+      </footer>
+
+    </div>
 
     <!-- Load jQuery -->
     <script   src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -42,7 +58,9 @@
           chartTitle: "Sales for 2018 (in billions)",
           titleFontSize: 24,
           titleFontColor: "indigo",
-          showTooltips: true
+          showTooltips: true,
+          yAxisWidth: 60,
+          xAxisHeight: 57
         };
         var dataArray = [
           [ 125, "JAN" ],
