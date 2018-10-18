@@ -7,29 +7,6 @@
 */
 
 // helper functions
-var addSuffix = function(input, suffix) {
-  return input + suffix;
-};
-
-var stripSuffix = function(input, suffixLength) {
-  return input.slice(0, input.length - suffixLength);
-};
-
-var addSpacer = function(width) {
-  return "<div style=\"width:" + addSuffix(width, "px") + ";\" class=\"bar-gen spacer\"></div>";
-};
-
-// passed options object must include width, height, value, valuePosition, label, and fontColor
-var addBar = function(options) {
-  var returnString = "<div style=\"width:" + addSuffix(options.width, "px") + ";height:" + addSuffix(options.height, "px") + ";color:" +  options.fontColor + ";background-color:" + options.barColor + ";\" class=\"bar-gen bar\"><span class=\"bar-value " + options.valuePosition + "\">" + options.value + "</span>";
-  returnString += options.showTooltips ? "<span class=\"tooltiptext\">" + options.label + " - " + options.value + "</span>" : "";
-  return returnString + "</div>";
-};
-
-var addLabel = function(label, width, labelColor) {
-  return "<div style=\"width:" + addSuffix(width, "px") + ";color:" + labelColor + ";\" class=\"bar-gen label\">" + label + "</div>";
-};
-
 // returns maximum value of passed array
 var maxValue = function(data) {
   var returnNum = 0;
@@ -39,27 +16,6 @@ var maxValue = function(data) {
     }
   }
   return returnNum;
-};
-
-// add a spacer and horizontal line
-var addHorizontal = function(width, styleObj) {
-  return "<div style=\"width:" + addSuffix(styleObj.yAxisWidth, "px") + "\" class=\"y-axis-spacer\"></div><hr align=\"left\" style=\"height:" + addSuffix(styleObj.axisBorderWidth, "px") + ";width:" + addSuffix(width - styleObj.yAxisWidth, "px") + ";color:" + styleObj.axisColor + ";background-color:" + styleObj.axisColor + "\" class=\"horizontal inline-block\">";
-};
-
-var addTick = function(tickValue, maxDataValue, styleObj) {
-  // calculate adjustment needed to make ticks line up
-  // adjustment calculation derived using https://mycurvefit.com/
-  var a = 113.6504;
-  var b = 1.071393;
-  var c = 8.679851;
-  var d = 0.2150284;
-  var adjustment = (a - d) / (1 + Math.pow(styleObj.barAreaHeight / c, b));
-  var bottom = addSuffix((tickValue / maxDataValue) * 100 - adjustment, "%");
-  return "<span class=\"tick\" style=\"color:" + styleObj.labelColor + ";bottom:" + bottom + ";\">" + tickValue + " <span style=\"color:" + styleObj.axisColor + ";\">-</span></span>";
-};
-
-var addTitle = function(chartTitle, styleObj) {
-  return "<div class=\"title\" style=\"margin-left:" + addSuffix(styleObj.yAxisWidth + 2, "px") + ";font-size:" + addSuffix(styleObj.titleFontSize, "px") + ";color:" + styleObj.titleFontColor + ";height:" + addSuffix((styleObj.titleFontSize + 10), "px") + ";\">" + chartTitle + "</div>";
 };
 
 // returns an array containing only the first value of each element in the passed array
@@ -73,7 +29,7 @@ var firstValue = function(inputArray) {
 
 // generate ticks for y axis based on data passed in
 var generateTicks = function(data) {
-  var maxVal = maxValue(data[0].length ? firstValue(data) : data);
+  var maxVal = maxValue(firstValue(data));
   return [
     0,
     Math.round(0.2 * maxVal),
@@ -94,58 +50,22 @@ var compareArrays = function(array1, array2) {
   return maxValue(procArray1) > maxValue(procArray2) ? maxValue(procArray1) : maxValue(procArray2);
 };
 
-// passed style object must contain element height, y axis width, x axis height, title area height, axis color, and label color
-var addYAxis = function(yAxisTicks, maxDataValue, styleObj) {
-  // define y axis div
-  var returnString = "<div style=\"border-right-width:" + addSuffix(styleObj.axisBorderWidth, "px") + ";height:" + addSuffix(styleObj.barAreaHeight, "px") + ";border-color:" + styleObj.axisColor + ";width:" + addSuffix(styleObj.yAxisWidth, "px") + "\" class=\"yaxis\">";
-
-  // add ticks to y axis
-  for (i = 0; i < yAxisTicks.length; i++) {
-    returnString += addTick(yAxisTicks[i], maxDataValue, { axisColor: styleObj.axisColor, labelColor: styleObj.labelColor, barAreaHeight: styleObj.barAreaHeight });
-  }
-
-  // close y axis div and return
-  return returnString += "</div>";
+// calculate adjustment needed to make ticks line up
+// adjustment calculation derived using https://mycurvefit.com/
+var calcAdjustment = function(barAreaHeight) {
+  var a = 113.6504;
+  var b = 1.071393;
+  var c = 8.679851;
+  var d = 0.2150284;
+  return (a - d) / (1 + Math.pow(barAreaHeight / c, b));
 };
 
-// passed style object must contain spacer width, bar width (elemWidth), element height, x axis height, title area height, font color, bar colors array, value position, and show tool tips boolean
-var addBars = function(data, maxDataValue, styleObj) {
-  var returnString = "";
-
-  for (var i = 0; i < data.length; i++) {
-    // build options object to pass to addBar()
-    var optionsObj = {
-      width: styleObj.elemWidth,
-      height: data[i][0] / maxDataValue * styleObj.barAreaHeight,
-      value: data[i][0],
-      fontColor: styleObj.fontColor,
-      barColor: styleObj.barColors[i % styleObj.barColors.length],
-      valuePosition: styleObj.valuePosition,
-      label: data[i][1],
-      showTooltips: styleObj.showTooltips
-    };
-    // add spacer and bar
-    returnString += addSpacer(styleObj.spacerWidth) + addBar(optionsObj);
-  }
-
-  return returnString;
-};
-
-// passed style object must include element width, y axis width, axis color, spacer width, and label color
-var addXAxis = function(data, styleObj) {
-  // add horizontal line
-  var returnString = addHorizontal(styleObj.width, { yAxisWidth: styleObj.yAxisWidth, axisColor: styleObj.axisColor, axisBorderWidth: styleObj.axisBorderWidth });
-
-  // add spacer to account for y axis
-  returnString += "<div style=\"width:" + addSuffix(styleObj.yAxisWidth + 2, "px") + ";\" class=\"y-axis-spacer\"></div>";
-
-  // add labels
-  for (i = 0; i < data.length; i++) {
-    // add spacer and label
-    returnString += addSpacer(styleObj.spacerWidth) + addLabel(data[i][1], styleObj.elemWidth, styleObj.labelColor);
-  }
-
-  return returnString;
+// returns a jQuery div element with the provided class and width
+var addSpacer = function(spacerWidth, classList) {
+  return $("<div>", { "class": classList })
+      .css({
+        "width": spacerWidth
+      });
 };
 
 // main function
@@ -168,16 +88,20 @@ var drawBarChart = function(data, options, element) {
   var yAxisWidth = options.yAxisWidth || 40;
   var axisBorderWidth = options.axisBorderWidth || 2;
   var barAreaHeight = options.height - titleAreaHeight - xAxisHeight;
+  var adjustment = calcAdjustment(barAreaHeight);
+  var i = 0;
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
-  var elem = element.length ? element[0] : element;
+  var $elem = element.length ? element : jQuery(element);
 
   // define element styling
-  elem.style.width = addSuffix(options.width, "px");
-  elem.style.height = addSuffix(options.height, "px");
+  $elem.css({
+    "width": options.width,
+    "height": options.height
+  });
 
   // add chart-container class to element
-  elem.classList.add("chart-container");
+  $elem.addClass("chart-container");
 
   // determine the width of each bar element
   var elemWidth = (options.width - (numSpaces * spacerWidth) - (yAxisWidth + axisBorderWidth)) / data.length;
@@ -186,17 +110,80 @@ var drawBarChart = function(data, options, element) {
   var maxDataValue = compareArrays(data, yAxisTicks);
 
   // add title
-  var outputString = addTitle(chartTitle, { yAxisWidth: yAxisWidth, titleFontSize: titleFontSize, titleFontColor: titleFontColor });
+  var $titleArea = $("<div>", { "class": "title" })
+    .css({
+      "margin-left": yAxisWidth + axisBorderWidth,
+      "font-size": titleFontSize,
+      "color": titleFontColor,
+      "height": titleAreaHeight
+    })
+    .text(chartTitle);
+  $elem.append($titleArea);
 
   // add y axis
-  outputString += addYAxis(yAxisTicks, maxDataValue, { axisBorderWidth: axisBorderWidth, barAreaHeight: barAreaHeight, yAxisWidth: yAxisWidth, axisColor: axisColor, labelColor: labelColor });
+  var $yAxis = $("<div>", { "class": "yaxis" })
+    .css({
+      "border-right-width": axisBorderWidth,
+      "height": barAreaHeight,
+      "border-color": axisColor,
+      "width": yAxisWidth
+    });
+  for (i = 0; i < yAxisTicks.length; i++) {
+    var bottom = ((yAxisTicks[i] / maxDataValue) * 100 - adjustment) + "%";
+    var $tickMark = $("<span>")
+      .css({
+        "color": axisColor
+      })
+      .text("-");
+    var $tick = $("<span>", { "class": "tick" })
+      .css({
+        "color": labelColor,
+        "bottom": bottom
+      })
+      .text(yAxisTicks[i] + " ")
+      .append($tickMark);
+    $yAxis.append($tick);
+  }
+  $elem.append($yAxis);
 
   // add bars
-  outputString += addBars(data, maxDataValue, { axisBorderWidth: axisBorderWidth, spacerWidth: spacerWidth, elemWidth: elemWidth, barAreaHeight: barAreaHeight, fontColor: fontColor, barColors: barColors, valuePosition: valuePosition, showTooltips: showTooltips });
+  for (i = 0; i < data.length; i++) {
+    var $bar = $("<div>", { "class": "bar-gen bar" })
+      .css({
+        "width": elemWidth,
+        "height": data[i][0] / maxDataValue * barAreaHeight,
+        "color": fontColor,
+        "background-color": barColors[i % barColors.length]
+      });
+    var $barValue = $("<span>", { "class": "bar-value " + valuePosition })
+      .text(data[i][0]);
+    $bar.append($barValue);
+    if (showTooltips) {
+      $bar.append($("<span>", { "class": "tooltiptext" })
+        .text(data[i][1] + " - " + data[i][0]));
+    }
+    $elem.append(addSpacer(spacerWidth, "bar-gen spacer"), $bar);
+  }
 
-  // add x axis
-  outputString += addXAxis(data, { axisBorderWidth: axisBorderWidth, width: options.width, yAxisWidth: yAxisWidth, axisColor: axisColor, spacerWidth: spacerWidth, elemWidth: elemWidth, labelColor: labelColor });
+  // add x axis horizontal line
+  var $horizontal = $("<hr>", { "class": "horizontal inline-block", "align": "left" })
+    .css({
+      "height": axisBorderWidth,
+      "width": options.width - yAxisWidth,
+      "color": axisColor,
+      "background-color": axisColor
+    });
+  $elem.append(addSpacer(yAxisWidth, "y-axis-spacer"), $horizontal);
 
-  // draw barchart
-  elem.innerHTML = outputString;
+  // add x axis labels
+  $elem.append(addSpacer(yAxisWidth + axisBorderWidth, "y-axis-spacer"));
+  for (i = 0; i < data.length; i++) {
+    var $label = $("<div>", { "class": "bar-gen label" })
+      .css({
+        "width": elemWidth,
+        "color": labelColor
+      })
+      .text(data[i][1]);
+    $elem.append(addSpacer(spacerWidth, "bar-gen spacer"), $label);
+  }
 };

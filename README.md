@@ -15,21 +15,25 @@
 
 Bar-Gen is a bar chart creation program that converts your data into attractive charts. Simple to use with many customizable features.
 
+**NOTE:** This library requires jQuery.
+
 ## Usage
 
 Add ```bar-gen.js``` and ```bar-gen.css``` to your project folder.
-Include them in your index page.
+Include them and a link to jQuery in your index page.
 ```
 <head>
   <!-- Load bar-gen CSS -->
   <link rel="stylesheet" href="bar-gen.css">
 </head>
 <body>
+  <!-- Don't forget to load jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <!-- Load bar-gen script -->
   <script src="bar-gen.js"></script>
 </body>
 ```
-Make sure to load your own custom css and js files **after** you load the bar-gen files.
+Make sure to load jQuery and the bar-gen files **before** your own custom css and js files.
 
 Call the bar chart generator using the ```drawBarChart``` function:
 ```
@@ -63,7 +67,7 @@ var options = {
   titleFontSize: 24,
   spacerWidth: 3
 };
-drawBarChart(data, options, document.getElementById("barchart"));
+drawBarChart(data, options, $("#barchart"));
 ```
 
 #### Output
@@ -95,14 +99,14 @@ Parameter | Optional | Summary | Default
 ```barColors``` | Yes | An array containing colors for the bar elements. If the number of colors in ```barColors``` is less than the total number of data points passed in, then the colors will repeat in the order they are stated. | ```[ "slateGrey" ]```
 ```chartTitle``` | Yes | The title that appears above the rendered chart. | ```"Barchart Title"```
 ```fontColor``` | Yes | The font color for the values that are displayed on the bar elements. | ```"white"```
-```height``` | No | The total height (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall height. The minimum height is 100. | *None*
+```height``` | No | The total height (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall height. The minimum height is 100. | *N/A*
 ```labelColor``` | Yes | The color of the axes' labels. | ```"black"```
 ```showTooltips``` | Yes | A boolean value to display or hide tooltips for the chart. | ```false```
 ```spacerWidth``` | Yes | The space (in pixels) between each bar element. | ```5```
 ```titleFontColor``` | Yes | The color of the title text. | ```"black"```
 ```titleFontSize``` | Yes | The font size (in pixels) of the title. | ```18```
 ```valuePosition``` | Yes | The position within the bar element where the value will be displayed. Choices are ```top```, ```middle```, or ```bottom```. | ```"top"```
-```width``` | No | The total width (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall width and the width of the individual bar elements will be based on this value. | *None*
+```width``` | No | The total width (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall width and the width of the individual bar elements will be based on this value. | *N/A*
 ```xAxisHeight``` | Yes | The height (in pixels) of the x-axis. | ```20```
 ```yAxisTicks``` | Yes | An array showing where the ticks on the y-axis should be located. The y-axis will render to the larger of either the largest value in the ```yAxisTicks``` array or the largest value in the ```dataArray``` array. | *Generated based on 0, 20, 40, 60, 80, and 100% of the provided data*
 ```yAxisWidth``` | Yes | The width (in pixels) of the y-axis. | ```40```
