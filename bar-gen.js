@@ -29,15 +29,14 @@ var firstValue = function(inputArray) {
 
 // generate ticks for y axis based on data passed in
 var generateTicks = function(data) {
-  var maxVal = maxValue(firstValue(data));
-  return [
-    0,
-    Math.round(0.2 * maxVal),
-    Math.round(0.4 * maxVal),
-    Math.round(0.6 * maxVal),
-    Math.round(0.8 * maxVal),
-    maxVal
-  ];
+  var largestValue = maxValue(firstValue(data));
+  var numZeroes = largestValue.toString().length - 2 < 0 ? 0 : largestValue.toString().length - 2;
+  var maxVal = Math.ceil(largestValue / (5 * Math.pow(10, numZeroes))) * (5 * Math.pow(10, numZeroes));
+  var returnArray = [];
+  for (var i = 0; i <= 10; i += 2) {
+    returnArray.push(Math.ceil(i / 10 * maxVal));
+  }
+  return returnArray;
 };
 
 // compares two arrays to determine the highest value
@@ -68,27 +67,42 @@ var addSpacer = function(spacerWidth, classList) {
       });
 };
 
+// initialize the options object
+var initializeOptionObj = function(options, data) {
+  var optionsObj = {
+    spacerWidth: 5,
+    fontColor: "white",
+    barColors: [ "slateGrey" ],
+    axisColor: "black",
+    labelColor: "black",
+    valuePosition: "top",
+    yAxisTicks: generateTicks(data),
+    chartTitle: "Chart",
+    titleFontSize: 18,
+    titleFontColor: "black",
+    xAxisHeight: 20,
+    showTooltips: false,
+    yAxisWidth: 40,
+    axisBorderWidth: 2,
+    showAnimation: false
+  };
+
+  // loop through options object and over write optionsObj defaults
+  for (var prop in options) {
+    optionsObj[prop] = options[prop];
+  }
+
+  return optionsObj;
+};
+
 // main function
 var drawBarChart = function(data, options, element) {
   // variable declaration
   var numSpaces = data.length;
-  var spacerWidth = options.spacerWidth || 5;
-  var fontColor = options.fontColor || "white";
-  var barColors = options.barColors || [ "slateGrey" ];
-  var axisColor = options.axisColor || "black";
-  var labelColor = options.labelColor || "black";
-  var valuePosition = options.valuePosition || "top";
-  var yAxisTicks = options.yAxisTicks || generateTicks(data);
-  var chartTitle = options.chartTitle || "Barchart Title";
-  var titleFontSize = options.titleFontSize || 18;
-  var titleFontColor = options.titleFontColor || "black";
-  var xAxisHeight = options.xAxisHeight || 20;
-  var titleAreaHeight = titleFontSize + 10;
-  var showTooltips = options.showTooltips || false;
-  var yAxisWidth = options.yAxisWidth || 40;
-  var axisBorderWidth = options.axisBorderWidth || 2;
-  var barAreaHeight = options.height - titleAreaHeight - xAxisHeight;
-  var adjustment = calcAdjustment(barAreaHeight);
+  var optionsObj = initializeOptionObj(options, data);
+  optionsObj.titleAreaHeight = optionsObj.titleFontSize + 10;
+  optionsObj.barAreaHeight = optionsObj.height - optionsObj.titleAreaHeight - optionsObj.xAxisHeight;
+  var adjustment = calcAdjustment(optionsObj.barAreaHeight);
   var i = 0;
 
   // check what type of element was passed in; a jQuery element will have a length while an element selected by document.getElementById will not
@@ -96,51 +110,51 @@ var drawBarChart = function(data, options, element) {
 
   // define element styling
   $elem.css({
-    "width": options.width,
-    "height": options.height
+    "width": optionsObj.width,
+    "height": optionsObj.height
   });
 
   // add chart-container class to element
   $elem.addClass("chart-container");
 
   // determine the width of each bar element
-  var elemWidth = (options.width - (numSpaces * spacerWidth) - (yAxisWidth + axisBorderWidth)) / data.length;
+  var elemWidth = (optionsObj.width - (numSpaces * optionsObj.spacerWidth) - (optionsObj.yAxisWidth + optionsObj.axisBorderWidth)) / data.length;
 
   // determine maximum value for bar chart
-  var maxDataValue = compareArrays(data, yAxisTicks);
+  var maxDataValue = compareArrays(data, optionsObj.yAxisTicks);
 
   // add title
   var $titleArea = $("<div>", { "class": "title" })
     .css({
-      "margin-left": yAxisWidth + axisBorderWidth,
-      "font-size": titleFontSize,
-      "color": titleFontColor,
-      "height": titleAreaHeight
+      "margin-left": optionsObj.yAxisWidth + optionsObj.axisBorderWidth,
+      "font-size": optionsObj.titleFontSize,
+      "color": optionsObj.titleFontColor,
+      "height": optionsObj.titleAreaHeight
     })
-    .text(chartTitle);
+    .text(optionsObj.chartTitle);
   $elem.append($titleArea);
 
   // add y axis
   var $yAxis = $("<div>", { "class": "yaxis" })
     .css({
-      "border-right-width": axisBorderWidth,
-      "height": barAreaHeight,
-      "border-color": axisColor,
-      "width": yAxisWidth
+      "border-right-width": optionsObj.axisBorderWidth,
+      "height": optionsObj.barAreaHeight,
+      "border-color": optionsObj.axisColor,
+      "width": optionsObj.yAxisWidth
     });
-  for (i = 0; i < yAxisTicks.length; i++) {
-    var bottom = ((yAxisTicks[i] / maxDataValue) * 100 - adjustment) + "%";
+  for (i = 0; i < optionsObj.yAxisTicks.length; i++) {
+    var bottom = ((optionsObj.yAxisTicks[i] / maxDataValue) * 100 - adjustment) + "%";
     var $tickMark = $("<span>")
       .css({
-        "color": axisColor
+        "color": optionsObj.axisColor
       })
       .text("-");
     var $tick = $("<span>", { "class": "tick" })
       .css({
-        "color": labelColor,
+        "color": optionsObj.labelColor,
         "bottom": bottom
       })
-      .text(yAxisTicks[i] + " ")
+      .text(optionsObj.yAxisTicks[i] + " ")
       .append($tickMark);
     $yAxis.append($tick);
   }
@@ -151,39 +165,45 @@ var drawBarChart = function(data, options, element) {
     var $bar = $("<div>", { "class": "bar-gen bar" })
       .css({
         "width": elemWidth,
-        "height": data[i][0] / maxDataValue * barAreaHeight,
-        "color": fontColor,
-        "background-color": barColors[i % barColors.length]
+        "height": data[i][0] / maxDataValue * optionsObj.barAreaHeight,
+        "color": optionsObj.fontColor,
+        "background-color": optionsObj.barColors[i % optionsObj.barColors.length]
       });
-    var $barValue = $("<span>", { "class": "bar-value " + valuePosition })
+    if (optionsObj.showAnimation) {
+      $bar.css({ "height": 0 })
+        .animate({
+          "height": "+=" + (data[i][0] / maxDataValue * optionsObj.barAreaHeight) + "px"
+        }, "slow");
+    }
+    var $barValue = $("<span>", { "class": "bar-value " + optionsObj.valuePosition })
       .text(data[i][0]);
     $bar.append($barValue);
-    if (showTooltips) {
+    if (optionsObj.showTooltips) {
       $bar.append($("<span>", { "class": "tooltiptext" })
         .text(data[i][1] + " - " + data[i][0]));
     }
-    $elem.append(addSpacer(spacerWidth, "bar-gen spacer"), $bar);
+    $elem.append(addSpacer(optionsObj.spacerWidth, "bar-gen spacer"), $bar);
   }
 
   // add x axis horizontal line
   var $horizontal = $("<hr>", { "class": "horizontal inline-block", "align": "left" })
     .css({
-      "height": axisBorderWidth,
-      "width": options.width - yAxisWidth,
-      "color": axisColor,
-      "background-color": axisColor
+      "height": optionsObj.axisBorderWidth,
+      "width": optionsObj.width - optionsObj.yAxisWidth,
+      "color": optionsObj.axisColor,
+      "background-color": optionsObj.axisColor
     });
-  $elem.append(addSpacer(yAxisWidth, "y-axis-spacer"), $horizontal);
+  $elem.append(addSpacer(optionsObj.yAxisWidth, "y-axis-spacer"), $horizontal);
 
   // add x axis labels
-  $elem.append(addSpacer(yAxisWidth + axisBorderWidth, "y-axis-spacer"));
+  $elem.append(addSpacer(optionsObj.yAxisWidth + optionsObj.axisBorderWidth, "y-axis-spacer"));
   for (i = 0; i < data.length; i++) {
     var $label = $("<div>", { "class": "bar-gen label" })
       .css({
         "width": elemWidth,
-        "color": labelColor
+        "color": optionsObj.labelColor
       })
       .text(data[i][1]);
-    $elem.append(addSpacer(spacerWidth, "bar-gen spacer"), $label);
+    $elem.append(addSpacer(optionsObj.spacerWidth, "bar-gen spacer"), $label);
   }
 };

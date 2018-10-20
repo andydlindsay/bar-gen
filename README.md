@@ -72,7 +72,7 @@ drawBarChart(data, options, $("#barchart"));
 
 #### Output
 
-![generated barchart](https://s3-us-west-2.amazonaws.com/andydlindsay-bar-gen/Screen+Shot+2018-10-15+at+9.52.45+PM.png)
+![generated barchart](https://s3-us-west-2.amazonaws.com/andydlindsay-bar-gen/README+example.png)
 
 ## The *data* parameter
 
@@ -97,10 +97,11 @@ Parameter | Optional | Summary | Default
 ```axisBorderWidth``` | Yes | The width or thickness (in pixels) of the axes. | ```2```
 ```axisColor``` | Yes | The color of the x and y axes. | ```"black"```
 ```barColors``` | Yes | An array containing colors for the bar elements. If the number of colors in ```barColors``` is less than the total number of data points passed in, then the colors will repeat in the order they are stated. | ```[ "slateGrey" ]```
-```chartTitle``` | Yes | The title that appears above the rendered chart. | ```"Barchart Title"```
+```chartTitle``` | Yes | The title that appears above the rendered chart. | ```"Chart"```
 ```fontColor``` | Yes | The font color for the values that are displayed on the bar elements. | ```"white"```
 ```height``` | No | The total height (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall height. The minimum height is 100. | *N/A*
 ```labelColor``` | Yes | The color of the axes' labels. | ```"black"```
+```showAnimation``` | Yes | Show an animation when the chart is rendered. | ```false```
 ```showTooltips``` | Yes | A boolean value to display or hide tooltips for the chart. | ```false```
 ```spacerWidth``` | Yes | The space (in pixels) between each bar element. | ```5```
 ```titleFontColor``` | Yes | The color of the title text. | ```"black"```
@@ -108,7 +109,7 @@ Parameter | Optional | Summary | Default
 ```valuePosition``` | Yes | The position within the bar element where the value will be displayed. Choices are ```top```, ```middle```, or ```bottom```. | ```"top"```
 ```width``` | No | The total width (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall width and the width of the individual bar elements will be based on this value. | *N/A*
 ```xAxisHeight``` | Yes | The height (in pixels) of the x-axis. | ```20```
-```yAxisTicks``` | Yes | An array showing where the ticks on the y-axis should be located. The y-axis will render to the larger of either the largest value in the ```yAxisTicks``` array or the largest value in the ```dataArray``` array. | *Generated based on 0, 20, 40, 60, 80, and 100% of the provided data*
+```yAxisTicks``` | Yes | An array showing where the ticks on the y-axis should be located. The y-axis will render to the larger of either the largest value in the ```yAxisTicks``` array or the largest value in the ```dataArray``` array. | *Generated based on 0, 20, 40, 60, 80, and 100% of the largest data value*
 ```yAxisWidth``` | Yes | The width (in pixels) of the y-axis. | ```40```
 
 ## Known issues or bugs
@@ -136,4 +137,4 @@ Parameter | Optional | Summary | Default
 * Experimented with tooltips at [W3 Schools](https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_bottom)
 * Practiced using markdown to create README file using [Dillinger markdown previewer](https://dillinger.io/)
 * Calculated y-axis tick vertical adjustment amount by plotting points on a graph at [mycurvefit.com](https://mycurvefit.com/)
-* Used code from [this stack overflow answer](https://stackoverflow.com/questions/34790054/css-disable-bootstrap-box-sizing) to override default bootstrap box-sizing
+* Used code from [this stack overflow answer](https://stackoverflow.com/questions/34790054/css-disable-bootstrap-box-sizing) to override default Bootstrap box-sizing
