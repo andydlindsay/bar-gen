@@ -5,8 +5,10 @@
   * [About](#about)
   * [Usage](#usage)
   * [Example](#example)
-  * [The data parameter](#the-data-parameter)
-  * [The options object](#the-options-object)
+  * [Parameters](#parameters)
+    * [The data parameter](#the-data-parameter)
+    * [The options object](#the-options-object)
+    * [The element parameter](#the-element-parameter)
   * [Known issues or bugs](#known-issues-or-bugs)
   * [Roadmap and upcoming features](#roadmap-and-upcoming-features)
   * [External resources used](#external-resources-used)
@@ -74,7 +76,9 @@ drawBarChart(data, options, $("#barchart"));
 
 ![generated barchart](https://s3-us-west-2.amazonaws.com/andydlindsay-bar-gen/README+example.png)
 
-## The *data* parameter
+## Parameters
+
+### The *data* parameter
 
 The ```data``` parameter must be a **nested** array containing the data for the chart as well as the labels for the x-axis. For example:
 ```
@@ -88,9 +92,9 @@ var data = [
 ```
 Ensure that the first element in the nested array is the data value and the second is the x-axis label.
 
-## The *options* object
+### The *options* object
 
-Bar-gen has quite a few customizable options. Use the ```options``` object to pass these values into the function. All of the following customization options except ```width``` and ```height``` are optional.
+Bar-Gen has quite a few customizable options. Use the ```options``` object to pass these values into the function. All of the following customization options except ```width``` and ```height``` are optional.
 
 Parameter | Optional | Summary | Default
 --- | --- | --- | ---
@@ -111,6 +115,10 @@ Parameter | Optional | Summary | Default
 ```xAxisHeight``` | Yes | The height (in pixels) of the x-axis. | ```20```
 ```yAxisTicks``` | Yes | An array showing where the ticks on the y-axis should be located. The y-axis will render to the larger of either the largest value in the ```yAxisTicks``` array or the largest value in the ```dataArray``` array. | *Generated based on 0, 20, 40, 60, 80, and 100% of the largest data value*
 ```yAxisWidth``` | Yes | The width (in pixels) of the y-axis. | ```40```
+
+### The element parameter
+
+This is the element that the chart will be rendered into. Bar-Gen accepts an element selected via javascript's ```document.getElementById("chart")``` or jQuery's ```$("#chart")```.
 
 ## Known issues or bugs
 
@@ -135,6 +143,11 @@ Parameter | Optional | Summary | Default
 * Found HTML5 color names on [c-sharpcorner.com](https://www.c-sharpcorner.com/UploadFile/da6585/color-name-in-html5/)
 * Practiced relative and absolute positioning to display values at specific places within bar at [W3 Schools](https://www.w3schools.com/css/tryit.asp?filename=trycss_image_text_bottom_left)
 * Experimented with tooltips at [W3 Schools](https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_bottom)
-* Practiced using markdown to create README file using [Dillinger markdown previewer](https://dillinger.io/)
+* Practiced using markdown to create README file using [Dillinger markdown previewer](https://dillinger.io/) and [StackEdit markdown previewer](https://stackedit.io)
 * Calculated y-axis tick vertical adjustment amount by plotting points on a graph at [mycurvefit.com](https://mycurvefit.com/)
 * Used code from [this stack overflow answer](https://stackoverflow.com/questions/34790054/css-disable-bootstrap-box-sizing) to override default Bootstrap box-sizing
+* Practiced jQuery animations on [W3 Schools](https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_animation1_relative)
+* Learned how to hide and show elements using jQuery from [a stack overflow answer](https://stackoverflow.com/questions/8840580/force-dom-redraw-refresh-on-chrome-mac)
+* Demoed form controls in [Bootstrap's documentation](https://getbootstrap.com/docs/4.0/components/forms/)
+* Learned about JSON.stringify on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+
