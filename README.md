@@ -116,7 +116,7 @@ Parameter | Optional | Summary | Default
 ```yAxisTicks``` | Yes | An array showing where the ticks on the y-axis should be located. The y-axis will render to the larger of either the largest value in the ```yAxisTicks``` array or the largest value in the ```dataArray``` array. | *Generated based on 0, 20, 40, 60, 80, and 100% of the largest data value*
 ```yAxisWidth``` | Yes | The width (in pixels) of the y-axis. | ```40```
 
-### The element parameter
+### The *element* parameter
 
 This is the element that the chart will be rendered into. Bar-Gen accepts an element selected via javascript's ```document.getElementById("chart")``` or jQuery's ```$("#chart")```.
 
@@ -150,4 +150,3 @@ This is the element that the chart will be rendered into. Bar-Gen accepts an ele
 * Learned how to hide and show elements using jQuery from [a stack overflow answer](https://stackoverflow.com/questions/8840580/force-dom-redraw-refresh-on-chrome-mac)
 * Demoed form controls in [Bootstrap's documentation](https://getbootstrap.com/docs/4.0/components/forms/)
 * Learned about JSON.stringify on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
-

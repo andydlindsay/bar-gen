@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Bar-Gen Demo</title>
 
-    <!-- Load bootstrap CSS -->
+    <!-- Load Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!-- Load bar-gen CSS -->
@@ -22,33 +22,169 @@
         </div>
       </div>
 
+      <form id="chart-options">
+
+        <div class="row form-group">
+
+          <div class="col-md-3 col-sm-6">
+            <label for="height" class="col-form-label">Height</label>
+            <input type="text" id="height" class="form-control" placeholder="350">
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="width" class="col-form-label">Width</label>
+            <input type="text" id="width" class="form-control" placeholder="475">
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="spacer-width" class="col-form-label">Spacer Width</label>
+            <input type="text" id="spacer-width" class="form-control" placeholder="2">
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="value-position" class="col-form-label">Value Position</label>
+            <select id="value-position" class="form-control">
+              <option value="top">Top</option>
+              <option value="middle">Middle</option>
+              <option value="bottom">Bottom</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="row form-group">
+
+          <div class="col-md-3 col-sm-6">
+            <label for="axis-color" class="col-form-label">Axis Color</label>
+            <select id="axis-color" class="form-control"></select>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="font-color" class="col-form-label">Font Color</label>
+            <select id="font-color" class="form-control"></select>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="label-color" class="col-form-label">Label Color</label>
+            <select id="label-color" class="form-control"></select>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <label for="title-font-color" class="col-form-label">Title Color</label>
+            <select id="title-font-color" class="form-control"></select>
+          </div>
+
+        </div>
+
+        <div class="row form-group">
+
+          <div class="col-md-6 col-sm-12">
+            <label for="bar-colors" class="col-form-label">Bar Colors</label>
+            <input type="text" id="bar-colors" class="form-control" placeholder="darkMagenta, darkRed, darkViolet">
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <label for="chart-title" class="col-form-label">Chart Title</label>
+            <input type="text" id="chart-title" class="form-control" placeholder="Sales for 2018 (in billions)">
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+            <button type="button" class="btn" data-toggle="collapse" data-target="#advanced-options">+ Additional Options</button>
+          </div>
+
+          <div class="btn-group float-right">
+            <button type="button" class="btn btn-secondary" id="reset">Reset Form</button>
+            <button type="button" class="btn btn-primary" id="redraw">Redraw Chart</button>
+          </div>
+
+        </div>
+
+        <div class="form-group collapse" id="advanced-options">
+          <div class="row form-group">
+
+            <div class="col-md-3 col-sm-6">
+              <label for="title-font-size" class="col-form-label">Title Font Size</label>
+              <input type="text" id="title-font-size" class="form-control" placeholder="24">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label for="y-axis-width" class="col-form-label">Y Axis Width</label>
+              <input type="text" id="y-axis-width" class="form-control" placeholder="40">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label for="axis-border-width" class="col-form-label">Axis Border Width</label>
+              <input type="text" id="axis-border-width" class="form-control" placeholder="2">
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+              <label for="x-axis-height" class="col-form-label">X Axis Height</label>
+              <input type="text" id="x-axis-height" class="form-control" placeholder="40">
+            </div>
+
+          </div>
+
+          <div class="row form-group">
+
+            <div class="col-md-6 col-sm-12">
+              <label for="y-axis-ticks" class="col-form-label">Y Axis Ticks</label>
+              <input type="text" id="y-axis-ticks" class="form-control" placeholder="0, 30, 60, 90, 120, 150">
+            </div>
+
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="show-animation">
+            <label class="form-check-label" for="show-animation">Show Animation</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="show-tooltips">
+            <label class="form-check-label" for="show-tooltips">Show Tooltips</label>
+          </div>
+
+        </div>
+
+      </form>
+
+      <div class="row">
+        <div class="col-8 col-offset-2">
+          <div id="chart1"></div>
+        </div>
+      </div>
 
       <!--
-        axisBorderWidth - number (0 - 15)
-        axisColor - select from color choices
-        barColors - array (not sure yet)
-        chartTitle - text box
-        fontColor - select from color choices
+        numOfElements - number (2 - 25)
+        smallestValue - number (>=0)
+        largestValue - number (>=1)
+
         height - number (100 - 500)
-        labelColor - select from color choices
-        showAnimation - checkbox
-        showTooltips - checkbox
+        width - number (200 - 500)
         spacerWidth - number (0 - 5)
+
+        valuePosition - selected from top, middle, or
+        fontColor - select from color choices
+        labelColor - select from color choices
+
+        barColors - text box comma separated values
+
+        chartTitle - text box
         titleFontColor - select from color choices
         titleFontSize - number (10 - 36)
-        valuePosition - selected from top, middle, or bottom
-        width - number (200 - 500)
+
+        axisBorderWidth - number (0 - 15)
+        axisColor - select from color choices
         xAxisHeight - number (15 - 30)
         yAxisTicks - text box comma separated values
         yAxisWidth - number (35 - 70)
 
-
-
+        showAnimation - checkbox
+        showTooltips - checkbox
       -->
-
-      <div id="chart1"></div>
-      <div id="chart2"></div>
-      <div id="chart3"></div>
 
       <footer class="page-footer font-small pt-4">
         <div class="container-fluid text-center">
@@ -64,6 +200,9 @@
     <!-- Load jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
+    <!-- Load Bootstrap js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
     <!-- Load bar-gen script -->
     <script src="bar-gen.js"></script>
 
@@ -71,22 +210,22 @@
     <script>
       $(document).ready(function() {
         var chartOptions = {
-          width: 500,
-          height: 450,
+          width: 475,
+          height: 350,
           labelColor: "indigo",
           barColors: [ "darkMagenta", "darkRed", "darkViolet" ],
           axisColor: "indigo",
           valuePosition: "top",
           // yAxisTicks: [ 0, 20, 40, 60, 80, 100, 120, 140, 160 ],
-          spacerWidth: 1,
+          spacerWidth: 2,
           chartTitle: "Sales for 2018 (in billions)",
           titleFontSize: 24,
           titleFontColor: "indigo",
           showTooltips: true,
-          yAxisWidth: 70,
-          xAxisHeight: 100,
+          yAxisWidth: 40,
+          xAxisHeight: 40,
           showAnimation: true,
-          axisBorderWidth: 0
+          axisBorderWidth: 2
         };
         var dataArray = [
           [ 125, "JAN" ],
@@ -104,40 +243,175 @@
         ];
         drawBarChart(dataArray, chartOptions, document.getElementById("chart1"));
 
-        chartOptions = {
-          width: 500,
-          height: 300,
-          labelColor: "darkMagenta",
-          // yAxisTicks: [ 0, 5, 10, 15, 20 ],
-          chartTitle: "Employees Who Showed Up For Work",
-          titleFontSize: 24,
-          spacerWidth: 3
-        };
-        dataArray = [
-          [ 10, "Monday" ],
-          [ 14, "Tuesday" ],
-          [ 12, "Wednesday" ],
-          [ 19, "Thursday" ],
-          [ 11, "Friday" ]
-        ];
-        drawBarChart(dataArray, chartOptions, $("#chart2"));
+        $("#redraw").click(() => {
+          alert($("#font-color").val());
+        });
 
-        chartOptions = {
-          width: 200,
-          height: 230,
-          chartTitle: "Favourite Foods",
-          titleFontColor: "crimson",
-          // yAxisTicks: [ 0, 25, 50 ],
-          spacerWidth: 4,
-          valuePosition: "bottom"
-        };
-        dataArray = [
-          [ "4", "P" ],
-          [ "2", "S" ],
-          [ "3", "Q" ],
-          [ "7", "R" ]
+        var colors = [
+          "aliceBlue",
+          "antiqueWhite",
+          "aqua",
+          "aquamarine",
+          "azure",
+          "beige",
+          "bisque",
+          "black",
+          "blanchedAlmond",
+          "blue",
+          "blueViolet",
+          "brown",
+          "burlyWood",
+          "cadetBlue",
+          "chartreuse",
+          "chocolate",
+          "coral",
+          "cornflowerBlue",
+          "cornsilk",
+          "crimson",
+          "cyan",
+          "darkBlue",
+          "darkCyan",
+          "darkGoldenRod",
+          "darkGray",
+          "darkGreen",
+          "darkKhaki",
+          "darkMagenta",
+          "darkOliveGreen",
+          "darkOrange",
+          "darkOrchid",
+          "darkRed",
+          "darkSalmon",
+          "darkSeaGreen",
+          "darkSlateBlue",
+          "darkSlateGray",
+          "darkTurquoise",
+          "darkViolet",
+          "deepPink",
+          "deepSkyBlue",
+          "dimGray",
+          "dodgerBlue",
+          "fireBrick",
+          "floralWhite",
+          "forestGreen",
+          "fuchsia",
+          "gainsboro",
+          "ghostWhite",
+          "gold",
+          "goldenRod",
+          "gray",
+          "green",
+          "greenYellow",
+          "honeyDew",
+          "hotPink",
+          "indianRed",
+          "indigo",
+          "ivory",
+          "khaki",
+          "lavender",
+          "lavenderBlush",
+          "lawnGreen",
+          "lemonChiffon",
+          "lightBlue",
+          "lightCoral",
+          "lightCyan",
+          "lightGoldenRodYellow",
+          "lightGray",
+          "lightGreen",
+          "lightPink",
+          "lightSalmon",
+          "lightSeaGreen",
+          "lightSkyBlue",
+          "lightSlateGray",
+          "lightSteelBlue",
+          "lightYellow",
+          "lime",
+          "limeGreen",
+          "linen",
+          "magenta",
+          "maroon",
+          "mediumAquaMarine",
+          "mediumBlue",
+          "mediumOrchid",
+          "mediumPurple",
+          "mediumSeaGreen",
+          "mediumSlateBlue",
+          "mediumSpringGreen",
+          "mediumTurquoise",
+          "mediumVioletRed",
+          "midnightBlue",
+          "mintCream",
+          "mistyRose",
+          "moccasin",
+          "navajoWhite",
+          "navy",
+          "oldLace",
+          "olive",
+          "oliveDrab",
+          "orange",
+          "orangeRed",
+          "orchid",
+          "paleGoldenRod",
+          "paleGreen",
+          "paleTurquoise",
+          "paleVioletRed",
+          "papayaWhip",
+          "peachPuff",
+          "peru",
+          "pink",
+          "plum",
+          "powderBlue",
+          "purple",
+          "red",
+          "rosyBrown",
+          "royalBlue",
+          "saddleBrown",
+          "salmon",
+          "sandyBrown",
+          "seaGreen",
+          "seaShell",
+          "sienna",
+          "silver",
+          "skyBlue",
+          "slateBlue",
+          "slateGray",
+          "snow",
+          "springGreen",
+          "steelBlue",
+          "tan",
+          "teal",
+          "thistle",
+          "tomato",
+          "turquoise",
+          "violet",
+          "wheat",
+          "white",
+          "whiteSmoke",
+          "yellow",
+          "yellowGreen"
         ];
-        drawBarChart(dataArray, chartOptions, $("#chart3"));
+
+        // capitalize the first letter of the input word
+        var capFirstLetter = function(input) {
+          return input.slice(0,1).toUpperCase() + input.slice(1);
+        }
+
+        var $fontColor = $("#font-color");
+        var $labelColor = $("#label-color");
+        var $titleFontColor = $("#title-font-color");
+        var $axisColor = $("#axis-color");
+
+        for (var i = 0; i < colors.length; i++) {
+          var option = "<option value=\"" + colors[i] + "\">" + capFirstLetter(colors[i]) + "</option>";
+          $fontColor.append(option);
+          $labelColor.append(option);
+          $titleFontColor.append(option);
+          $axisColor.append(option);
+        }
+
+        $fontColor.prop("selectedIndex", -1);
+        $labelColor.prop("selectedIndex", -1);
+        $titleFontColor.prop("selectedIndex", -1);
+        $axisColor.prop("selectedIndex", -1);
       });
     </script>
   </body>

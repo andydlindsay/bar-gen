@@ -49,7 +49,7 @@ var compareArrays = function(array1, array2) {
   return maxValue(procArray1) > maxValue(procArray2) ? maxValue(procArray1) : maxValue(procArray2);
 };
 
-// calculate adjustment needed to make ticks line up
+// calculate adjustment needed to make y-axis ticks line up
 // adjustment calculation derived using https://mycurvefit.com/
 var calcAdjustment = function(barAreaHeight) {
   var a = 113.6504;
@@ -70,6 +70,8 @@ var addSpacer = function(spacerWidth, classList) {
 // initialize the options object
 var initializeOptionObj = function(options, data) {
   var optionsObj = {
+    width: 0,
+    height: 0,
     spacerWidth: 5,
     fontColor: "white",
     barColors: [ "slateGrey" ],
@@ -87,10 +89,16 @@ var initializeOptionObj = function(options, data) {
     showAnimation: false
   };
 
-  // loop through options object and over write optionsObj defaults
+  // loop through options object and overwrite optionsObj defaults
   for (var prop in options) {
-    optionsObj[prop] = options[prop];
+    if (optionsObj.hasOwnProperty(prop)) {
+      optionsObj[prop] = options[prop];
+    }
   }
+
+  // add calculations to options object
+  optionsObj.titleAreaHeight = optionsObj.titleFontSize + 10;
+  optionsObj.barAreaHeight = optionsObj.height - optionsObj.titleAreaHeight - optionsObj.xAxisHeight;
 
   return optionsObj;
 };
@@ -100,8 +108,6 @@ var drawBarChart = function(data, options, element) {
   // variable declaration
   var numSpaces = data.length;
   var optionsObj = initializeOptionObj(options, data);
-  optionsObj.titleAreaHeight = optionsObj.titleFontSize + 10;
-  optionsObj.barAreaHeight = optionsObj.height - optionsObj.titleAreaHeight - optionsObj.xAxisHeight;
   var adjustment = calcAdjustment(optionsObj.barAreaHeight);
   var i = 0;
 
