@@ -23,7 +23,7 @@ Bar-Gen is a bar chart creation program that converts your data into attractive 
 
 Add ```bar-gen.js``` and ```bar-gen.css``` to your project folder.
 Include them and a link to jQuery in your index page.
-```
+```html
 <head>
   <!-- Load bar-gen CSS -->
   <link rel="stylesheet" href="bar-gen.css">
@@ -38,7 +38,7 @@ Include them and a link to jQuery in your index page.
 Make sure to load jQuery and the bar-gen files **before** your own custom css and js files.
 
 Call the bar chart generator using the ```drawBarChart``` function:
-```
+```javascript
 drawBarChart(data, options, element);
 ```
 
@@ -52,7 +52,7 @@ drawBarChart(data, options, element);
 ## Example
 
 #### Javascript
-```
+```javascript
 var data = [
   [ 10, "Monday" ],
   [ 14, "Tuesday" ],
@@ -81,7 +81,7 @@ drawBarChart(data, options, $("#barchart"));
 ### The *data* parameter
 
 The ```data``` parameter must be a **nested** array containing the data for the chart as well as the labels for the x-axis. For example:
-```
+```javascript
 var data = [
   [ 10, "Monday" ],
   [ 14, "Tuesday" ],
@@ -110,7 +110,7 @@ Parameter | Optional | Summary | Default
 ```spacerWidth``` | Yes | The space (in pixels) between each bar element. | ```5```
 ```titleFontColor``` | Yes | The color of the title text. | ```"black"```
 ```titleFontSize``` | Yes | The font size (in pixels) of the title. | ```18```
-```valuePosition``` | Yes | The position within the bar element where the value will be displayed. Choices are ```top```, ```middle```, or ```bottom```. | ```"top"```
+```valuePosition``` | Yes | The position within the bar element where the value will be displayed. Choices are ```top```, ```center```, or ```bottom```. | ```"top"```
 ```width``` | No | The total width (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall width and the width of the individual bar elements will be based on this value. | *N/A*
 ```xAxisHeight``` | Yes | The height (in pixels) of the x-axis. | ```20```
 ```yAxisTicks``` | Yes | An array showing where the ticks on the y-axis should be located. The y-axis will render to the larger of either the largest value in the ```yAxisTicks``` array or the largest value in the ```dataArray``` array. | *Generated based on 0, 20, 40, 60, 80, and 100% of the largest data value*

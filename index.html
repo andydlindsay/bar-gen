@@ -45,7 +45,7 @@
             <label for="value-position" class="col-form-label">Value Position</label>
             <select id="value-position" class="form-control">
               <option value="top">Top</option>
-              <option value="middle">Middle</option>
+              <option value="center">Center</option>
               <option value="bottom">Bottom</option>
             </select>
           </div>
@@ -174,7 +174,7 @@
 
         chartTitle - text box
         titleFontColor - select from color choices
-        titleFontSize - number (10 - 36)
+        titleFontSize - number (18 - 36)
 
         axisBorderWidth - number (0 - 15)
         axisColor - select from color choices
@@ -209,44 +209,6 @@
     <!-- Generate bar charts -->
     <script>
       $(document).ready(function() {
-        var chartOptions = {
-          width: 475,
-          height: 350,
-          labelColor: "indigo",
-          barColors: [ "darkMagenta", "darkRed", "darkViolet" ],
-          axisColor: "indigo",
-          valuePosition: "top",
-          // yAxisTicks: [ 0, 20, 40, 60, 80, 100, 120, 140, 160 ],
-          spacerWidth: 2,
-          chartTitle: "Sales for 2018 (in billions)",
-          titleFontSize: 24,
-          titleFontColor: "indigo",
-          showTooltips: true,
-          yAxisWidth: 40,
-          xAxisHeight: 40,
-          showAnimation: true,
-          axisBorderWidth: 2
-        };
-        var dataArray = [
-          [ 125, "JAN" ],
-          [ 100, "FEB" ],
-          [ 124, "MAR" ],
-          [ 130, "APR" ],
-          [ 98, "MAY" ],
-          [ 110, "JUN" ],
-          [ 104, "JUL" ],
-          [ 127, "AUG" ],
-          [ 147, "SEP" ],
-          [ 110, "OCT" ],
-          [ 120, "NOV" ],
-          [ 145, "DEC" ]
-        ];
-        drawBarChart(dataArray, chartOptions, document.getElementById("chart1"));
-
-        $("#redraw").click(() => {
-          alert($("#font-color").val());
-        });
-
         var colors = [
           "aliceBlue",
           "antiqueWhite",
@@ -389,6 +351,129 @@
           "yellow",
           "yellowGreen"
         ];
+        var chartOptions = {
+          width: 475,
+          height: 350
+        };
+        var dataArray = [
+          [ 125, "JAN" ],
+          [ 100, "FEB" ],
+          [ 124, "MAR" ],
+          [ 130, "APR" ],
+          [ 98, "MAY" ],
+          [ 110, "JUN" ],
+          [ 104, "JUL" ],
+          [ 127, "AUG" ],
+          [ 147, "SEP" ],
+          [ 110, "OCT" ],
+          [ 120, "NOV" ],
+          [ 145, "DEC" ]
+        ];
+        drawBarChart(dataArray, chartOptions, document.getElementById("chart1"));
+
+        $("#redraw").click(() => {
+          // retrieve form values
+          var i;
+          var options = {};
+
+          options.height = Number($("#height").val()) || 350;
+          options.width = Number($("#width").val()) || 475;
+          options.valuePosition = $("#value-position").val();
+
+          var spacerWidth = $("#spacer-width").val() ? Number($("#spacer-width").val()) : -1;
+          if (spacerWidth >= 0) {
+            options.spacerWidth = spacerWidth;
+          }
+
+          var axisColor = $("#axis-color").val();
+          if (axisColor) {
+            options.axisColor = axisColor;
+          }
+
+          var fontColor = $("#font-color").val();
+          if (fontColor) {
+            options.fontColor = fontColor;
+          }
+
+          var labelColor = $("#label-color").val();
+          if (labelColor) {
+            options.labelColor = labelColor;
+          }
+
+          var titleFontColor = $("#title-font-color").val();
+          if (titleFontColor) {
+            options.titleFontColor = titleFontColor;
+          }
+
+          var barColors = $("#bar-colors").val();
+          var lowerCaseColors = [];
+          for (i = 0; i < colors.length; i++) {
+            lowerCaseColors.push(colors[i].toLowerCase());
+          }
+          if (barColors) {
+            var splitArray = barColors.split(",");
+            var barColorArray = [];
+            for (i = 0; i < splitArray.length; i++) {
+              var barColor = splitArray[i].trim().toLowerCase();
+              if (lowerCaseColors.indexOf(barColor) >= 0) {
+                barColorArray.push(barColor);
+              }
+            }
+            options.barColors = barColorArray;
+          }
+
+          var chartTitle = $("#chart-title").val();
+          if (chartTitle) {
+            options.chartTitle = chartTitle;
+          }
+
+          var titleFontSize = $("#title-font-size").val() ? Number($("#title-font-size").val()) : -1;
+          if (titleFontSize >= 18) {
+            options.titleFontSize = titleFontSize;
+          }
+
+          var yAxisWidth = $("#y-axis-width").val() ? Number($("#y-axis-width").val()) : -1;
+          if (yAxisWidth >= 35) {
+            options.yAxisWidth = yAxisWidth;
+          }
+
+          var axisBorderWidth = $("#axis-border-width").val() ? Number($("#axis-border-width").val()) : -1;
+          if (axisBorderWidth >= 0) {
+            options.axisBorderWidth = axisBorderWidth;
+          }
+
+          var xAxisHeight = $("#x-axis-height").val() ? Number($("#x-axis-height").val()) : -1;
+          if (xAxisHeight >= 15) {
+            options.xAxisHeight = xAxisHeight;
+          }
+
+          var tickArray = $("#y-axis-ticks").val() ? $("#y-axis-ticks").val().split(",") : [];
+          if (tickArray.length > 0) {
+            var yAxisTicks = [];
+            for (i = 0; i < tickArray.length; i++) {
+              yAxisTicks.push(Number(tickArray[i]));
+            }
+            options.yAxisTicks = yAxisTicks;
+          }
+
+          var showAnimation = $("#show-animation")[0].checked;
+          if (showAnimation) {
+            options.showAnimation = showAnimation;
+          }
+
+          var showTooltips = $("#show-tooltips")[0].checked;
+          if (showTooltips) {
+            options.showTooltips = showTooltips;
+          }
+
+          console.log(options);
+
+          var $chart1 = $("#chart1");
+          $chart1.empty();
+          drawBarChart(dataArray, options, $chart1);
+        });
+
+
 
         // capitalize the first letter of the input word
         var capFirstLetter = function(input) {
@@ -400,7 +485,7 @@
         var $titleFontColor = $("#title-font-color");
         var $axisColor = $("#axis-color");
 
-        for (var i = 0; i < colors.length; i++) {
+        for (i = 0; i < colors.length; i++) {
           var option = "<option value=\"" + colors[i] + "\">" + capFirstLetter(colors[i]) + "</option>";
           $fontColor.append(option);
           $labelColor.append(option);
