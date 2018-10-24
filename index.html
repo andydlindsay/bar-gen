@@ -97,6 +97,7 @@
           </div>
 
           <div class="btn-group float-right">
+            <button type="button" class="btn btn-info" id="get-code">Get Code</button>
             <button type="button" class="btn btn-secondary" id="reset">Reset Form</button>
             <button type="button" class="btn btn-primary" id="redraw">Redraw Chart</button>
           </div>
@@ -150,6 +151,13 @@
         </div>
 
       </form>
+
+      <div id="output-code-block" class="d-none row form-group">
+        <div class="col-12">
+          <label for="output-code" class="col-form-label">Options Object</label>
+          <textarea readonly class="form-control" rows="5" id="output-code"></textarea>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-8 col-offset-2">
@@ -371,10 +379,16 @@
         ];
         drawBarChart(dataArray, chartOptions, document.getElementById("chart1"));
 
+        var options = {};
+
+        $("#get-code").click(() => {
+          $("#output-code-block").removeClass("d-none");
+          $("#output-code").val("var options = " + JSON.stringify(options, null, 1));
+        });
+
         $("#redraw").click(() => {
           // retrieve form values
           var i;
-          var options = {};
 
           options.height = Number($("#height").val()) || 350;
           options.width = Number($("#width").val()) || 475;
@@ -465,8 +479,6 @@
           if (showTooltips) {
             options.showTooltips = showTooltips;
           }
-
-          console.log(options);
 
           var $chart1 = $("#chart1");
           $chart1.empty();
