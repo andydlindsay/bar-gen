@@ -169,35 +169,6 @@
         </div>
       </div>
 
-      <!--
-        numOfElements - number (2 - 25)
-        smallestValue - number (>=0)
-        largestValue - number (>=1)
-
-        height - number (100 - 500)
-        width - number (200 - 500)
-        spacerWidth - number (0 - 5)
-
-        valuePosition - selected from top, middle, or
-        fontColor - select from color choices
-        labelColor - select from color choices
-
-        barColors - text box comma separated values
-
-        chartTitle - text box
-        titleFontColor - select from color choices
-        titleFontSize - number (18 - 36)
-
-        axisBorderWidth - number (0 - 15)
-        axisColor - select from color choices
-        xAxisHeight - number (15 - 30)
-        yAxisTicks - text box comma separated values
-        yAxisWidth - number (35 - 70)
-
-        showAnimation - checkbox
-        showTooltips - checkbox
-      -->
-
       <footer class="page-footer font-small pt-4">
         <div class="container-fluid text-center">
           <h5>Check out the project on <a target="_blank" href="http://www.github.com/andydlindsay/bar-gen">Github</a></h5>
@@ -399,6 +370,9 @@
           var $chart1 = $("#chart1");
           $chart1.empty();
           drawBarChart(dataArray, options, $chart1);
+          $("input[type=text], textarea, select").val("");
+          $("#show-animation")[0].checked = false;
+          $("#show-tooltips")[0].checked = false;
         });
 
         $("#redraw").click(() => {
@@ -499,8 +473,6 @@
           $chart1.empty();
           drawBarChart(dataArray, options, $chart1);
         });
-
-
 
         // capitalize the first letter of the input word
         var capFirstLetter = function(input) {
