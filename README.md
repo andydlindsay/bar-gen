@@ -107,9 +107,9 @@ Parameter | Optional | Summary | Default
 ```labelColor``` | Yes | The color of the axes' labels. | ```"black"```
 ```showAnimation``` | Yes | Show an animation when the chart is rendered. | ```false```
 ```showTooltips``` | Yes | A boolean value to display or hide tooltips for the chart. | ```false```
-```spacerWidth``` | Yes | The space (in pixels) between each bar element. | ```5```
+```spacerWidth``` | Yes | The space (in pixels) between each bar element. | ```2```
 ```titleFontColor``` | Yes | The color of the title text. | ```"black"```
-```titleFontSize``` | Yes | The font size (in pixels) of the title. | ```18```
+```titleFontSize``` | Yes | The font size (in pixels) of the title. | ```24```
 ```valuePosition``` | Yes | The position within the bar element where the value will be displayed. Choices are ```top```, ```center```, or ```bottom```. | ```"top"```
 ```width``` | No | The total width (in pixels) of the element that the bar chart will be rendered into. The chart will not exceed this overall width and the width of the individual bar elements will be based on this value. | *N/A*
 ```xAxisHeight``` | Yes | The height (in pixels) of the x-axis. | ```20```

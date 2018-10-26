@@ -72,7 +72,7 @@ var initializeOptionObj = function(options, data) {
   var optionsObj = {
     width: 0,
     height: 0,
-    spacerWidth: 5,
+    spacerWidth: 2,
     fontColor: "white",
     barColors: [ "slateGrey" ],
     axisColor: "black",
@@ -80,7 +80,7 @@ var initializeOptionObj = function(options, data) {
     valuePosition: "top",
     yAxisTicks: generateTicks(data),
     chartTitle: "Chart",
-    titleFontSize: 18,
+    titleFontSize: 24,
     titleFontColor: "black",
     xAxisHeight: 20,
     showTooltips: false,
